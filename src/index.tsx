@@ -17,6 +17,8 @@ const ThemeProvider = styled.div`
   --color-background: #f5f5f5;
   --color-title: rgba(175, 47, 47, 0.15);
   --color-text: #4d4d4d;
+  --color-text-light: #bfbfbf;
+
   --font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --unit: 0.5rem;
 `;
