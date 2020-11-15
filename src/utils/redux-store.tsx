@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { middleware } from 'retreon';
 
-import reducer, { initialState } from '../reducers/index';
+import reducer, { initialState } from '../reducers/todos';
 
 // This enables integration with the redux-devtools browser extension:
 // https://github.com/reduxjs/redux-devtools

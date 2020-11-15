@@ -1,5 +1,5 @@
 import { initializeStore } from '../../utils/redux-store';
-import { initialState } from '../index';
+import { initialState } from '../todos';
 
 describe('Todo list reducer', () => {
   // TODO: Replace this with more meaningful tests.
