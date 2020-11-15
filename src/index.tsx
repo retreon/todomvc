@@ -9,9 +9,12 @@ import store from './utils/redux-store';
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
-    box-sizing: border-box;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
+  }
+
+  * {
+    box-sizing: border-box;
   }
 `;
 
@@ -20,6 +23,7 @@ const ThemeProvider = styled.div`
   --color-title: rgba(175, 47, 47, 0.15);
   --color-text: #4d4d4d;
   --color-text-light: #bfbfbf;
+  --color-neutral: white;
 
   --font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --unit: 0.5rem;

@@ -1,11 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import TodoInput from './TodoInput';
+
 export default function App() {
   return (
     <Container>
       <Todos>
-        <Heading>todos</Heading>
+        <Title>todos</Title>
+
+        <ListSection>
+          <TodoInput />
+        </ListSection>
 
         <Footer>
           <FooterNote>Double-click to edit a todo</FooterNote>
@@ -42,18 +48,23 @@ const Todos = styled.section`
   max-width: calc(var(--unit) * 70);
 `;
 
-const Heading = styled.h1`
+const Title = styled.h1`
   color: var(--color-title);
   font-weight: 100;
-  font-size: 100px;
+  font-size: calc(var(--unit) * 12.5);
   line-height: normal;
   text-align: center;
   margin: var(--unit) 0;
   text-rendering: optimizeLegibility;
 `;
 
+const ListSection = styled.section`
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+`;
+
 const Footer = styled.footer`
   text-align: center;
+  margin-top: calc(var(--unit) * 8);
 `;
 
 const FooterNote = styled.p`
