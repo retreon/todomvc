@@ -1,11 +1,13 @@
 import { initializeStore } from '../../utils/redux-store';
-import { initialState } from '../todos';
+import * as todos from '../../actions/todos';
 
 describe('Todo list reducer', () => {
-  // TODO: Replace this with more meaningful tests.
-  it('returns state for unknown actions', () => {
+  it('updates the new todo title when instructed', () => {
     const store = initializeStore();
 
-    expect(store.getState()).toEqual(initialState);
+    const newTitle = 'pet the otters';
+    store.dispatch(todos.updateTitle(newTitle));
+
+    expect(store.getState()).toHaveProperty('newTodo', newTitle);
   });
 });
