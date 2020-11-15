@@ -17,8 +17,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "react-scripts test",
-    "test:lint": "eslint src"
+    "test": "./run-tests",
+    "test:unit": "react-scripts test --colors",
+    "test:lint": "eslint src --color"
   },
   "prettier": {
     "singleQuote": true,
