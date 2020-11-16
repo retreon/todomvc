@@ -8,23 +8,32 @@ import * as todos from '../actions/todos';
 interface Props {
   title: string;
   updateTitle: typeof todos.updateTitle;
+  submit: typeof todos.submit;
 }
 
 export class TodoInput extends React.Component<Props> {
   render() {
     return (
-      <Input
-        data-test-id="new-todo-input"
-        value={this.props.title}
-        autoFocus
-        placeholder="What needs to be done?"
-        onInput={this.updateInputContent}
-      />
+      <form data-test-id="new-todo-form" onSubmit={this.appendTodo}>
+        <Input
+          data-test-id="new-todo-input"
+          value={this.props.title}
+          autoFocus
+          placeholder="What needs to be done?"
+          onInput={this.updateInputContent}
+        />
+      </form>
     );
   }
 
   updateInputContent = (event: React.SyntheticEvent<HTMLInputElement>) => {
     this.props.updateTitle(event.currentTarget.value);
+  };
+
+  appendTodo = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+    this.props.submit();
   };
 }
 
@@ -54,6 +63,7 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = {
   updateTitle: todos.updateTitle,
+  submit: todos.submit,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoInput);
