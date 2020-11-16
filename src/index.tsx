@@ -27,6 +27,7 @@ const ThemeProvider = styled.div`
   --color-text: #4d4d4d;
   --color-text-light: #777;
   --color-text-lighter: #bfbfbf;
+  --color-text-lightest: #e6e6e6;
   --color-neutral: white;
   --color-divider: #00000018;
 

@@ -91,4 +91,21 @@ describe('Todo list reducer', () => {
     store.dispatch(tasks.changeView(TaskView.Completed));
     expect(store.getState()).toHaveProperty('view', TaskView.Completed);
   });
+
+  it('toggles task completion', () => {
+    const store = initializeStore();
+
+    store.dispatch(tasks.updateTitle('change name to Gill Bates'));
+    store.dispatch(tasks.create());
+
+    store.dispatch(tasks.toggleCompletion());
+    expect(Object.values(store.getState().tasks)).toMatchObject([
+      { completed: true },
+    ]);
+
+    store.dispatch(tasks.toggleCompletion());
+    expect(Object.values(store.getState().tasks)).toMatchObject([
+      { completed: false },
+    ]);
+  });
 });

@@ -64,4 +64,13 @@ export default createReducer(initialState, (handleAction) => [
   handleAction(tasks.changeView, (state, view) => {
     state.view = view;
   }),
+
+  handleAction(tasks.toggleCompletion, (state) => {
+    const tasks = Object.values(state.tasks);
+    const hasIncompleteTask = tasks.some((task) => !task.completed);
+
+    tasks.forEach((task) => {
+      task.completed = hasIncompleteTask;
+    });
+  }),
 ]);

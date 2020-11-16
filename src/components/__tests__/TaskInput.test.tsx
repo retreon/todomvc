@@ -9,6 +9,7 @@ describe('TaskInput', () => {
       title: 'invent another dimension',
       updateTitle: jest.fn(),
       createTask: jest.fn(),
+      toggleTaskCompletion: jest.fn(),
       ...overrides,
     };
 

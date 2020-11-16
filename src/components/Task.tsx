@@ -88,8 +88,8 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 
 const StylisticCheckbox = styled.label.attrs({})`
   border: 1px solid var(--color-divider);
-  height: 1.25em;
-  width: 1.25em;
+  height: 1.75rem;
+  width: 1.75rem;
   border-radius: 2em;
   margin: 0 calc(var(--unit) * 2);
   display: flex;
@@ -110,6 +110,9 @@ const Title = styled.p`
   padding: calc(var(--unit) * 2) 0;
   margin: 0;
   transition: color 100ms ease-in-out;
+  overflow: hidden;
+  word-wrap: break-word;
+  line-height: 1.2;
 
   &[data-completed='true'] {
     color: var(--color-text-lighter);
