@@ -45,6 +45,7 @@ const Input = styled.input`
   font-size: calc(var(--unit) * 3);
   color: inherit;
   box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+  font-weight: 300;
 
   :focus {
     outline: none;

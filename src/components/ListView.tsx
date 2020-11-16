@@ -3,16 +3,24 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import { RootState } from '../reducers/tasks';
+import Task from './Task';
 
 interface Props {
   incompleteTasks: number;
+  taskIds: Array<string>; // List of task IDs.
 }
 
-export function ListView({ incompleteTasks }: Props) {
+export function ListView({ incompleteTasks, taskIds }: Props) {
   const pluralizedEntity = incompleteTasks === 1 ? 'item' : 'items';
 
   return (
     <Container>
+      <TaskList>
+        {taskIds.map((taskId) => (
+          <Task id={taskId} key={taskId} />
+        ))}
+      </TaskList>
+
       <Controls>
         <RemainingTasks>
           {incompleteTasks} {pluralizedEntity} left
@@ -32,6 +40,12 @@ const Container = styled.div`
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -4px #f6f6f6,
     0 9px 1px -4px rgba(0, 0, 0, 0.2), 0 16px 0 -8px #f6f6f6,
     0 17px 2px -8px rgba(0, 0, 0, 0.2);
+`;
+
+const TaskList = styled.ol`
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 `;
 
 const Controls = styled.footer`
@@ -63,6 +77,14 @@ export const mapStateToProps = (state: RootState) => {
 
   return {
     incompleteTasks: tasks.filter((task) => !task.completed).length,
+    taskIds: Object.entries(state.tasks)
+      .sort(([, t1], [, t2]) => {
+        return (
+          new Date(t1.creationDate).getTime() -
+          new Date(t2.creationDate).getTime()
+        );
+      })
+      .map(([taskId]) => taskId),
   };
 };
 
