@@ -5,7 +5,7 @@ on:
   - pull_request
 
 jobs:
-  test:
+  test_and_deploy:
     runs-on: ubuntu-latest
     name: Unit tests
     steps:
@@ -18,3 +18,14 @@ jobs:
         run: yarn install
       - name: Run tests
         run: yarn test
+      - name: Build production bundle
+        if: ${{ success() }}
+        run: yarn build
+      - name: Deploy to GitHub Pages
+        if: ${{ success() }}
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
