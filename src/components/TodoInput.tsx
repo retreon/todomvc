@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
-import { RootState } from '../reducers/todos';
-import * as todos from '../actions/todos';
+import { RootState } from '../reducers/tasks';
+import * as tasks from '../actions/tasks';
 
 interface Props {
   title: string;
-  updateTitle: typeof todos.updateTitle;
-  submit: typeof todos.submit;
+  updateTitle: typeof tasks.updateTitle;
+  submit: typeof tasks.submit;
 }
 
 export class TodoInput extends React.Component<Props> {
@@ -62,8 +62,8 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = {
-  updateTitle: todos.updateTitle,
-  submit: todos.submit,
+  updateTitle: tasks.updateTitle,
+  submit: tasks.submit,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoInput);

@@ -6,7 +6,7 @@ import TodoInput from './TodoInput';
 export default function App() {
   return (
     <Container>
-      <Todos>
+      <Tasks>
         <Title>todos</Title>
 
         <ListSection>
@@ -26,7 +26,7 @@ export default function App() {
             </Link>
           </FooterNote>
         </Footer>
-      </Todos>
+      </Tasks>
     </Container>
   );
 }
@@ -41,7 +41,7 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const Todos = styled.section`
+const Tasks = styled.section`
   display: flex;
   flex-direction: column;
   flex-grow: 1;

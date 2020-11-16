@@ -1,26 +1,26 @@
 import { createReducer } from 'retreon';
 
-import * as todos from '../actions/todos';
+import * as tasks from '../actions/tasks';
 
 export interface RootState {
   newTodo: string;
-  todos: Array<{
+  tasks: Array<{
     title: string;
   }>;
 }
 
 export const initialState: RootState = {
   newTodo: '',
-  todos: [],
+  tasks: [],
 };
 
 export default createReducer(initialState, (handleAction) => [
-  handleAction(todos.updateTitle, (state, title) => {
+  handleAction(tasks.updateTitle, (state, title) => {
     state.newTodo = title;
   }),
 
-  handleAction(todos.submit, (state) => {
-    state.todos.push({ title: state.newTodo });
+  handleAction(tasks.submit, (state) => {
+    state.tasks.push({ title: state.newTodo });
     state.newTodo = '';
   }),
 ]);
