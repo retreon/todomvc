@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import TodoInput from './TodoInput';
+import TaskInput from './TaskInput';
 import ListView from './ListView';
 
 export default function App() {
@@ -11,7 +11,7 @@ export default function App() {
         <Title>todos</Title>
 
         <ListSection>
-          <TodoInput />
+          <TaskInput />
           <ListView />
         </ListSection>
 

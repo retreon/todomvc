@@ -11,7 +11,7 @@ interface Props {
   createTask: typeof tasks.create;
 }
 
-export class TodoInput extends React.Component<Props> {
+export class TaskInput extends React.Component<Props> {
   render() {
     return (
       <form data-test-id="new-todo-form" onSubmit={this.appendTodo}>
@@ -67,4 +67,4 @@ const mapDispatchToProps = {
   createTask: tasks.create,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoInput);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskInput);

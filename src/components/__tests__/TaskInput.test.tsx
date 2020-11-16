@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { TodoInput } from '../TodoInput';
+import { TaskInput } from '../TaskInput';
 
-describe('TodoInput', () => {
+describe('TaskInput', () => {
   function setup<Props>(overrides?: Props) {
     const props = {
       title: 'invent another dimension',
@@ -12,7 +12,7 @@ describe('TodoInput', () => {
       ...overrides,
     };
 
-    const output = shallow(<TodoInput {...props} />);
+    const output = shallow(<TaskInput {...props} />);
 
     function findByTestId(id: string) {
       return output.find({ 'data-test-id': id });
