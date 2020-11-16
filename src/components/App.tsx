@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import TodoInput from './TodoInput';
+import ListView from './ListView';
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
 
         <ListSection>
           <TodoInput />
+          <ListView />
         </ListSection>
 
         <Footer>
