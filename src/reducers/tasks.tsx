@@ -3,24 +3,33 @@ import { createReducer } from 'retreon';
 import * as tasks from '../actions/tasks';
 
 export interface RootState {
-  newTodo: string;
-  tasks: Array<{
-    title: string;
-  }>;
+  newTaskTitle: string;
+  tasks: {
+    [taskId: string]: {
+      title: string;
+      completed: boolean;
+      creationDate: string; // ISO-8601
+    };
+  };
 }
 
 export const initialState: RootState = {
-  newTodo: '',
-  tasks: [],
+  newTaskTitle: '',
+  tasks: {},
 };
 
 export default createReducer(initialState, (handleAction) => [
   handleAction(tasks.updateTitle, (state, title) => {
-    state.newTodo = title;
+    state.newTaskTitle = title;
   }),
 
-  handleAction(tasks.submit, (state) => {
-    state.tasks.push({ title: state.newTodo });
-    state.newTodo = '';
+  handleAction(tasks.create, (state, { id, creationDate }) => {
+    state.tasks[id] = {
+      title: state.newTaskTitle,
+      completed: false,
+      creationDate,
+    };
+
+    state.newTaskTitle = '';
   }),
 ]);

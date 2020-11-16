@@ -8,7 +8,7 @@ import * as tasks from '../actions/tasks';
 interface Props {
   title: string;
   updateTitle: typeof tasks.updateTitle;
-  submit: typeof tasks.submit;
+  createTask: typeof tasks.create;
 }
 
 export class TodoInput extends React.Component<Props> {
@@ -33,7 +33,7 @@ export class TodoInput extends React.Component<Props> {
   appendTodo = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    this.props.submit();
+    this.props.createTask();
   };
 }
 
@@ -58,12 +58,12 @@ const Input = styled.input`
 `;
 
 const mapStateToProps = (state: RootState) => ({
-  title: state.newTodo,
+  title: state.newTaskTitle,
 });
 
 const mapDispatchToProps = {
   updateTitle: tasks.updateTitle,
-  submit: tasks.submit,
+  createTask: tasks.create,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoInput);

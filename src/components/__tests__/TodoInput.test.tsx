@@ -8,7 +8,7 @@ describe('TodoInput', () => {
     const props = {
       title: 'invent another dimension',
       updateTitle: jest.fn(),
-      submit: jest.fn(),
+      createTask: jest.fn(),
       ...overrides,
     };
 
@@ -43,10 +43,10 @@ describe('TodoInput', () => {
   });
 
   it('can submit the new todo', () => {
-    const { findByTestId, props } = setup();
+    const { findByTestId, props } = setup({ title: 'call mum' });
 
     findByTestId('new-todo-form').simulate('submit', new Event('submit'));
 
-    expect(props.submit).toHaveBeenCalled();
+    expect(props.createTask).toHaveBeenCalled();
   });
 });
