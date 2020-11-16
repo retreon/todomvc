@@ -36,4 +36,12 @@ export default createReducer(initialState, (handleAction) => [
   handleAction(tasks.remove, (state, id) => {
     delete state.tasks[id];
   }),
+
+  handleAction(tasks.markCompleted, (state, id) => {
+    state.tasks[id].completed = true;
+  }),
+
+  handleAction(tasks.markIncomplete, (state, id) => {
+    state.tasks[id].completed = false;
+  }),
 ]);

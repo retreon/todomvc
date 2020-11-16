@@ -56,4 +56,18 @@ describe('Todo list reducer', () => {
 
     expect(store.getState().tasks).toEqual({});
   });
+
+  it('can toggle completion', () => {
+    const store = initializeStore();
+
+    store.dispatch(tasks.updateTitle('meet Ghandi'));
+    store.dispatch(tasks.create());
+
+    const [id] = Object.keys(store.getState().tasks);
+    store.dispatch(tasks.markCompleted(id));
+    expect(store.getState().tasks[id]).toHaveProperty('completed', true);
+
+    store.dispatch(tasks.markIncomplete(id));
+    expect(store.getState().tasks[id]).toHaveProperty('completed', false);
+  });
 });

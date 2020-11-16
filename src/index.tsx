@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
 const ThemeProvider = styled.div`
   --color-background: #f5f5f5;
   --color-primary: rgb(175, 47, 47);
+  --color-secondary: #5dc2af;
   --color-text: #4d4d4d;
   --color-text-light: #777;
   --color-text-lighter: #bfbfbf;

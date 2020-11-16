@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import invariant from 'invariant';
 import styled from 'styled-components';
-import { MdClose } from 'react-icons/md';
+import { MdClose, MdCheck } from 'react-icons/md';
 
 import { RootState } from '../reducers/tasks';
 import * as tasks from '../actions/tasks';
@@ -14,16 +14,27 @@ interface OwnProps {
 
 interface Props extends OwnProps {
   title: string;
+  completed: boolean;
   removeTask: typeof tasks.remove;
+  markCompleted: typeof tasks.markCompleted;
+  markIncomplete: typeof tasks.markIncomplete;
 }
 
 export class Task extends React.Component<Props> {
   render() {
-    const { title } = this.props;
+    const { title, completed } = this.props;
 
     return (
       <Container>
-        {title}
+        <StylisticCheckbox data-checked={completed}>
+          <HiddenCheckbox
+            data-test-id="task-completion-checkbox"
+            onChange={this.toggleCompletion}
+            checked={completed}
+          />
+          <MdCheck />
+        </StylisticCheckbox>
+        <Title data-completed={completed}>{title}</Title>
         <DeleteButton
           data-test-id="task-delete-button"
           onClick={this.removeTask}
@@ -37,15 +48,25 @@ export class Task extends React.Component<Props> {
   removeTask = () => {
     this.props.removeTask(this.props.id);
   };
+
+  toggleCompletion = () => {
+    const { id, completed } = this.props;
+
+    if (completed) {
+      this.props.markIncomplete(id);
+    } else {
+      this.props.markCompleted(id);
+    }
+  };
 }
 
 const Container = styled.li`
-  padding: calc(var(--unit) * 2);
   font-size: 1.5rem;
   font-weight: 300;
   border-bottom: 1px solid var(--color-divider);
   display: grid;
-  grid-template-columns: auto min-content;
+  grid-template-columns: min-content auto min-content;
+  align-items: center;
 
   button {
     opacity: 0;
@@ -61,11 +82,47 @@ const Container = styled.li`
   }
 `;
 
+const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
+  display: none;
+`;
+
+const StylisticCheckbox = styled.label.attrs({})`
+  border: 1px solid var(--color-divider);
+  height: 1.25em;
+  width: 1.25em;
+  border-radius: 2em;
+  margin: 0 calc(var(--unit) * 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &[data-checked='true'] {
+    border-color: var(--color-secondary);
+    color: var(--color-secondary);
+  }
+
+  &[data-checked='false'] svg {
+    visibility: hidden;
+  }
+`;
+
+const Title = styled.p`
+  padding: calc(var(--unit) * 2) 0;
+  margin: 0;
+  transition: color 100ms ease-in-out;
+
+  &[data-completed='true'] {
+    color: var(--color-text-lighter);
+    text-decoration: line-through;
+  }
+`;
+
 const DeleteButton = styled(Button)`
   color: var(--color-primary);
-  font-size: calc(var(--unit) * 2.8);
-  display: inline-grid;
-  align-content: center;
+  font-size: calc(var(--unit) * 3);
+  margin: 0 calc(var(--unit) * 2);
+  transition: opacity 100ms ease-in-out;
+  display: flex;
 `;
 
 export const mapStateToProps = (state: RootState, { id }: OwnProps) => {
@@ -74,11 +131,14 @@ export const mapStateToProps = (state: RootState, { id }: OwnProps) => {
 
   return {
     title: task.title,
+    completed: task.completed,
   };
 };
 
 const mapDispatchToProps = {
   removeTask: tasks.remove,
+  markCompleted: tasks.markCompleted,
+  markIncomplete: tasks.markIncomplete,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task);
