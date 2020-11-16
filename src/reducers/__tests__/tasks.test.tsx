@@ -60,7 +60,7 @@ describe('Todo list reducer', () => {
   it('can toggle completion', () => {
     const store = initializeStore();
 
-    store.dispatch(tasks.updateTitle('meet Ghandi'));
+    store.dispatch(tasks.updateTitle('bake a pie'));
     store.dispatch(tasks.create());
 
     const [id] = Object.keys(store.getState().tasks);
@@ -69,5 +69,18 @@ describe('Todo list reducer', () => {
 
     store.dispatch(tasks.markIncomplete(id));
     expect(store.getState().tasks[id]).toHaveProperty('completed', false);
+  });
+
+  it('clears completed tasks', () => {
+    const store = initializeStore();
+
+    store.dispatch(tasks.updateTitle('sleep more'));
+    store.dispatch(tasks.create());
+
+    const [id] = Object.keys(store.getState().tasks);
+    store.dispatch(tasks.markCompleted(id));
+    store.dispatch(tasks.clearCompleted());
+
+    expect(store.getState().tasks).toEqual({});
   });
 });

@@ -6,6 +6,8 @@ const Button = styled.button`
   border: none;
   padding: 0;
   font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
 
   :focus {
     outline: 1px dashed currentColor;

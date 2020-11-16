@@ -4,13 +4,20 @@ import { connect } from 'react-redux';
 
 import { RootState } from '../reducers/tasks';
 import Task from './Task';
+import { Button } from './common';
+import * as tasks from '../actions/tasks';
 
 interface Props {
   incompleteTasks: number;
   taskIds: Array<string>; // List of task IDs.
+  clearCompletedTasks: typeof tasks.clearCompleted;
 }
 
-export function ListView({ incompleteTasks, taskIds }: Props) {
+export function ListView({
+  incompleteTasks,
+  taskIds,
+  clearCompletedTasks,
+}: Props) {
   const pluralizedEntity = incompleteTasks === 1 ? 'item' : 'items';
 
   return (
@@ -28,7 +35,9 @@ export function ListView({ incompleteTasks, taskIds }: Props) {
 
         <TaskFilter>Pretend these are buttons</TaskFilter>
 
-        <ClearCompleted>Clear completed</ClearCompleted>
+        <ClearCompleted onClick={clearCompletedTasks}>
+          Clear completed
+        </ClearCompleted>
       </Controls>
     </Container>
   );
@@ -49,15 +58,16 @@ const TaskList = styled.ol`
 `;
 
 const Controls = styled.footer`
-  padding: var(--unit) calc(var(--unit) * 2);
+  padding: var(--unit);
   color: var(--color-text-light);
   font-weight: 300;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: max-content auto max-content;
 `;
 
 const RemainingTasks = styled.p`
   margin: 0;
+  padding: 0 var(--unit);
 `;
 
 const TaskFilter = styled.p`
@@ -66,10 +76,16 @@ const TaskFilter = styled.p`
   justify-content: center;
 `;
 
-const ClearCompleted = styled.p`
-  margin: 0;
+const ClearCompleted = styled(Button)`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  font-weight: inherit;
+  padding: 0 var(--unit);
+
+  :hover {
+    text-decoration: underline;
+  }
 `;
 
 export const mapStateToProps = (state: RootState) => {
@@ -88,4 +104,8 @@ export const mapStateToProps = (state: RootState) => {
   };
 };
 
-export default connect(mapStateToProps)(ListView);
+const mapDispatchToProps = {
+  clearCompletedTasks: tasks.clearCompleted,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListView);
