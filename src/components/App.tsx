@@ -51,8 +51,7 @@ const Tasks = styled.section`
 `;
 
 const Title = styled.h1`
-  color: var(--color-primary);
-  opacity: 15%;
+  color: var(--color-primary-lighter);
   font-weight: 100;
   font-size: calc(var(--unit) * 12.5);
   line-height: normal;

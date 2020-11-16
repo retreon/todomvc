@@ -3,17 +3,27 @@ import { createReducer } from 'retreon';
 import * as tasks from '../actions/tasks';
 
 export interface RootState {
+  view: TaskView;
   newTaskTitle: string;
   tasks: {
-    [taskId: string]: {
-      title: string;
-      completed: boolean;
-      creationDate: string; // ISO-8601
-    };
+    [taskId: string]: Task;
   };
 }
 
+export enum TaskView {
+  All = 'all',
+  Active = 'active',
+  Completed = 'completed',
+}
+
+export interface Task {
+  title: string;
+  completed: boolean;
+  creationDate: string; // ISO-8601
+}
+
 export const initialState: RootState = {
+  view: TaskView.All,
   newTaskTitle: '',
   tasks: {},
 };
@@ -49,5 +59,9 @@ export default createReducer(initialState, (handleAction) => [
     Object.entries(state.tasks).forEach(([id, task]) => {
       if (task.completed) delete state.tasks[id];
     });
+  }),
+
+  handleAction(tasks.changeView, (state, view) => {
+    state.view = view;
   }),
 ]);

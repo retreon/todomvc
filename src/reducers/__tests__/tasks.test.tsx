@@ -1,6 +1,7 @@
 import { initializeStore } from '../../utils/redux-store';
 import * as tasks from '../../actions/tasks';
 import * as effects from '../../effects/tasks';
+import { TaskView } from '../tasks';
 
 jest.mock('../../effects/tasks');
 
@@ -82,5 +83,12 @@ describe('Todo list reducer', () => {
     store.dispatch(tasks.clearCompleted());
 
     expect(store.getState().tasks).toEqual({});
+  });
+
+  it('changes the task view when requested', () => {
+    const store = initializeStore();
+
+    store.dispatch(tasks.changeView(TaskView.Completed));
+    expect(store.getState()).toHaveProperty('view', TaskView.Completed);
   });
 });

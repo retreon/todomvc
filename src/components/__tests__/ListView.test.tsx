@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { ListView, mapStateToProps } from '../ListView';
-import { initialState } from '../../reducers/tasks';
+import { initialState, TaskView } from '../../reducers/tasks';
 import Task from '../Task';
 
 describe('ListView', () => {
@@ -59,9 +59,36 @@ describe('ListView', () => {
         },
       };
 
-      const state = mapStateToProps(withTasks);
+      const props = mapStateToProps(withTasks);
 
-      expect(state.taskIds).toEqual(['first', 'second']);
+      expect(props.taskIds).toEqual(['first', 'second']);
+    });
+
+    it('applies the active filter', () => {
+      const withTasks = {
+        ...initialState,
+        tasks: {
+          first: {
+            title: 'learn to pilot a helicopter',
+            completed: false,
+            creationDate: '2020',
+          },
+          second: {
+            title: 'write yet another JS framework',
+            completed: true,
+            creationDate: '2019',
+          },
+        },
+      };
+
+      withTasks.view = TaskView.Active;
+      const activeTaskProps = mapStateToProps(withTasks);
+
+      withTasks.view = TaskView.Completed;
+      const completedTaskProps = mapStateToProps(withTasks);
+
+      expect(activeTaskProps.taskIds).toEqual(['first']);
+      expect(completedTaskProps.taskIds).toEqual(['second']);
     });
   });
 });

@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
-import { RootState } from '../reducers/tasks';
+import { RootState, TaskView } from '../reducers/tasks';
 import Task from './Task';
 import { Button } from './common';
 import * as tasks from '../actions/tasks';
+import ListFilter from './ListFilter';
 
 interface Props {
   incompleteTasks: number;
@@ -33,7 +34,7 @@ export function ListView({
           {incompleteTasks} {pluralizedEntity} left
         </RemainingTasks>
 
-        <TaskFilter>Pretend these are buttons</TaskFilter>
+        <ListFilter />
 
         <ClearCompleted onClick={clearCompletedTasks}>
           Clear completed
@@ -70,12 +71,6 @@ const RemainingTasks = styled.p`
   padding: 0 var(--unit);
 `;
 
-const TaskFilter = styled.p`
-  margin: 0;
-  display: flex;
-  justify-content: center;
-`;
-
 const ClearCompleted = styled(Button)`
   display: flex;
   justify-content: flex-end;
@@ -99,6 +94,13 @@ export const mapStateToProps = (state: RootState) => {
           new Date(t1.creationDate).getTime() -
           new Date(t2.creationDate).getTime()
         );
+      })
+      .filter(([, task]) => {
+        return {
+          [TaskView.All]: true,
+          [TaskView.Active]: task.completed === false,
+          [TaskView.Completed]: task.completed === true,
+        }[state.view];
       })
       .map(([taskId]) => taskId),
   };
