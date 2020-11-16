@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
 
 const ThemeProvider = styled.div`
   --color-background: #f5f5f5;
-  --color-title: rgba(175, 47, 47, 0.15);
+  --color-primary: rgb(175, 47, 47);
   --color-text: #4d4d4d;
   --color-text-light: #777;
   --color-text-lighter: #bfbfbf;

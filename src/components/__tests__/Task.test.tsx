@@ -9,6 +9,7 @@ describe('Task', () => {
     const props = {
       id: '<task-id>',
       title: 'boil the oceans',
+      removeTask: jest.fn(),
       ...overrides,
     };
 
@@ -18,8 +19,12 @@ describe('Task', () => {
     };
   }
 
-  it('renders', () => {
-    expect(setup).not.toThrow();
+  it('deletes the task when you click the delete icon', () => {
+    const { output, props } = setup();
+
+    output.find({ 'data-test-id': 'task-delete-button' }).simulate('click');
+
+    expect(props.removeTask).toHaveBeenCalledWith(props.id);
   });
 
   describe('mapStateToProps', () => {

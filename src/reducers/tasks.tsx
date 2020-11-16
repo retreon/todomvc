@@ -32,4 +32,8 @@ export default createReducer(initialState, (handleAction) => [
 
     state.newTaskTitle = '';
   }),
+
+  handleAction(tasks.remove, (state, id) => {
+    delete state.tasks[id];
+  }),
 ]);

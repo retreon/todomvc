@@ -44,4 +44,16 @@ describe('Todo list reducer', () => {
       },
     });
   });
+
+  it('can remove a task when instructed', () => {
+    const store = initializeStore();
+
+    store.dispatch(tasks.updateTitle('meet Ghandi'));
+    store.dispatch(tasks.create());
+
+    const [id] = Object.keys(store.getState().tasks);
+    store.dispatch(tasks.remove(id));
+
+    expect(store.getState().tasks).toEqual({});
+  });
 });
