@@ -9784,10 +9784,10 @@ ret@~0.1.10:
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
   integrity sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==
 
-retreon@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/retreon/-/retreon-0.5.0.tgz#17af6e96ca8de14d86cfc8966c0cd559a413f978"
-  integrity sha512-Q3+zlQwZKNYLr0bv+5D2VTkLfRt9nxy2S05asT/xZto+Fp3pg2+1RwPyIEv2d5Y/rmCs8fud+zZQGFPHf0C/cQ==
+retreon@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/retreon/-/retreon-0.6.0.tgz#3e00718b66e2d20212a7a7e2e7522640c933a511"
+  integrity sha512-X+XRjiwk0KiUyLaURKVSQtBmLHooctaJbh8yGlQ5njxgr5wKBsLtPQGIh9Qy1l+8BpSsKNfeKitpaT2IzGerwQ==
   dependencies:
     "@babel/runtime" "7.x.x"
     immer "^8.0.0"
