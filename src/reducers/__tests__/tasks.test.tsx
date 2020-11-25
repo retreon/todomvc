@@ -12,30 +12,20 @@ describe('Todo list reducer', () => {
   const MOCK_ID = '<random-id>';
 
   beforeEach(() => {
-    mockedEffects.createTaskMetadata.mockReturnValue({
+    mockedEffects.createTaskMetadata.mockImplementation((title) => ({
+      title,
       creationDate: MOCK_CREATION_DATE,
       id: MOCK_ID,
-    });
-  });
-
-  it('updates the new todo title when instructed', () => {
-    const store = initializeStore();
-
-    const title = 'pet the otters';
-    store.dispatch(tasks.updateTitle(title));
-
-    expect(store.getState()).toHaveProperty('newTaskTitle', title);
+    }));
   });
 
   it('appends the new todo into the list of tasks', () => {
     const store = initializeStore();
 
     const title = 'beat AlphaGo 52-2';
-    store.dispatch(tasks.updateTitle(title));
-    store.dispatch(tasks.create());
+    store.dispatch(tasks.create(title));
 
     expect(store.getState()).toMatchObject({
-      newTaskTitle: '',
       tasks: {
         [MOCK_ID]: {
           title,
@@ -48,9 +38,7 @@ describe('Todo list reducer', () => {
 
   it('can remove a task when instructed', () => {
     const store = initializeStore();
-
-    store.dispatch(tasks.updateTitle('meet Ghandi'));
-    store.dispatch(tasks.create());
+    store.dispatch(tasks.create('meet Ghandi'));
 
     const [id] = Object.keys(store.getState().tasks);
     store.dispatch(tasks.remove(id));
@@ -60,9 +48,7 @@ describe('Todo list reducer', () => {
 
   it('can toggle completion', () => {
     const store = initializeStore();
-
-    store.dispatch(tasks.updateTitle('bake a pie'));
-    store.dispatch(tasks.create());
+    store.dispatch(tasks.create('bake a pie'));
 
     const [id] = Object.keys(store.getState().tasks);
     store.dispatch(tasks.markCompleted(id));
@@ -75,8 +61,7 @@ describe('Todo list reducer', () => {
   it('clears completed tasks', () => {
     const store = initializeStore();
 
-    store.dispatch(tasks.updateTitle('sleep more'));
-    store.dispatch(tasks.create());
+    store.dispatch(tasks.create('sleep more'));
 
     const [id] = Object.keys(store.getState().tasks);
     store.dispatch(tasks.markCompleted(id));
@@ -95,8 +80,7 @@ describe('Todo list reducer', () => {
   it('toggles task completion', () => {
     const store = initializeStore();
 
-    store.dispatch(tasks.updateTitle('change name to Gill Bates'));
-    store.dispatch(tasks.create());
+    store.dispatch(tasks.create('change name to Gill Bates'));
 
     store.dispatch(tasks.toggleCompletion());
     expect(Object.values(store.getState().tasks)).toMatchObject([

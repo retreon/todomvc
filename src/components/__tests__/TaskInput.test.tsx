@@ -19,35 +19,52 @@ describe('TaskInput', () => {
       return output.find({ 'data-test-id': id });
     }
 
+    const simulate = {
+      input(input: string) {
+        findByTestId('new-todo-input').simulate('input', {
+          currentTarget: { value: input },
+        });
+      },
+
+      submit() {
+        findByTestId('new-todo-form').simulate('submit', new Event('submit'));
+      },
+    };
+
     return {
       output,
       props,
       findByTestId,
+      simulate,
     };
   }
 
-  it('shows the new todo title', () => {
-    const { findByTestId, props } = setup();
-
-    expect(findByTestId('new-todo-input').prop('value')).toBe(props.title);
-  });
-
   it('updates the title when it changes', () => {
-    const { findByTestId, props } = setup();
+    const { simulate, findByTestId } = setup();
 
     const title = 'release the kraken!';
-    findByTestId('new-todo-input').simulate('input', {
-      currentTarget: { value: title },
-    });
+    simulate.input(title);
 
-    expect(props.updateTitle).toHaveBeenCalledWith(title);
+    expect(findByTestId('new-todo-input').prop('value')).toBe(title);
   });
 
-  it('can submit the new todo', () => {
-    const { findByTestId, props } = setup({ title: 'call mum' });
+  it('creates the new task', () => {
+    const { props, simulate, findByTestId } = setup();
 
-    findByTestId('new-todo-form').simulate('submit', new Event('submit'));
+    const title = 'call mum';
+    simulate.input(title);
+    simulate.submit();
 
-    expect(props.createTask).toHaveBeenCalled();
+    expect(props.createTask).toHaveBeenCalledWith(title);
+    expect(findByTestId('new-todo-input').prop('value')).toBe('');
+  });
+
+  it('does not create a task if there is only whitespace', () => {
+    const { props, simulate } = setup();
+
+    simulate.input('  \t\n\t  ');
+    simulate.submit();
+
+    expect(props.createTask).not.toHaveBeenCalled();
   });
 });
