@@ -984,7 +984,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.12.1":
+"@babel/runtime@7.x.x", "@babel/runtime@^7.12.1":
   version "7.12.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.5.tgz#410e7e487441e1b360c29be715d870d9b985882e"
   integrity sha512-plcc+hbExy3McchJCEQG3knOsuh3HH+Prx1P6cLIkET/0dLuQDEnrT+s27Axgc9bqfsmNUNHfscgMUdBpC9xfg==
@@ -9784,11 +9784,12 @@ ret@~0.1.10:
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
   integrity sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==
 
-retreon@^0.5.0-rc.1:
-  version "0.5.0-rc.1"
-  resolved "https://registry.yarnpkg.com/retreon/-/retreon-0.5.0-rc.1.tgz#7f27a9437fe054791d07500f797c67711e947146"
-  integrity sha512-UH+2h4MdUbBT364y2CXD0QKgBAKBGYN+OHIM/bs7dbm1FeLZlmMYLD7Dy/e1G2icxcJCybOyauHRQ1YMO+YTdg==
+retreon@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/retreon/-/retreon-0.5.0.tgz#17af6e96ca8de14d86cfc8966c0cd559a413f978"
+  integrity sha512-Q3+zlQwZKNYLr0bv+5D2VTkLfRt9nxy2S05asT/xZto+Fp3pg2+1RwPyIEv2d5Y/rmCs8fud+zZQGFPHf0C/cQ==
   dependencies:
+    "@babel/runtime" "7.x.x"
     immer "^8.0.0"
 
 retry@^0.12.0:
