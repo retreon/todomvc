@@ -3,18 +3,14 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { MdExpandMore } from 'react-icons/md';
 
-import { RootState } from '../reducers/tasks';
 import * as tasks from '../actions/tasks';
 import { Button } from './common';
 
-interface Props {
-  title: string;
-  updateTitle: typeof tasks.updateTitle;
-  createTask: typeof tasks.create;
-  toggleTaskCompletion: typeof tasks.toggleCompletion;
-}
+export class TaskInput extends React.Component<Props, State> {
+  state = {
+    title: '',
+  };
 
-export class TaskInput extends React.Component<Props> {
   render() {
     return (
       <Container data-test-id="new-todo-form" onSubmit={this.appendTodo}>
@@ -24,7 +20,7 @@ export class TaskInput extends React.Component<Props> {
 
         <Input
           data-test-id="new-todo-input"
-          value={this.props.title}
+          value={this.state.title}
           autoFocus
           placeholder="What needs to be done?"
           onInput={this.updateInputContent}
@@ -34,14 +30,25 @@ export class TaskInput extends React.Component<Props> {
   }
 
   updateInputContent = (event: React.SyntheticEvent<HTMLInputElement>) => {
-    this.props.updateTitle(event.currentTarget.value);
+    this.setState({ title: event.currentTarget.value });
   };
 
   appendTodo = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    this.props.createTask();
+
+    this.props.createTask(this.state.title);
+    this.setState({ title: '' });
   };
+}
+
+interface Props {
+  createTask: typeof tasks.create;
+  toggleTaskCompletion: typeof tasks.toggleCompletion;
+}
+
+interface State {
+  title: string;
 }
 
 const Container = styled.form`
@@ -80,14 +87,9 @@ const Input = styled.input`
   }
 `;
 
-const mapStateToProps = (state: RootState) => ({
-  title: state.newTaskTitle,
-});
-
 const mapDispatchToProps = {
-  updateTitle: tasks.updateTitle,
   createTask: tasks.create,
   toggleTaskCompletion: tasks.toggleCompletion,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskInput);
+export default connect(null, mapDispatchToProps)(TaskInput);

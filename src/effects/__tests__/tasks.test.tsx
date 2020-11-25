@@ -8,9 +8,11 @@ jest.setSystemTime(CURRENT_TIME);
 describe('Task effects', () => {
   describe('create', () => {
     it('assigns an ID and creation date to the task', () => {
-      const task = tasks.createTaskMetadata();
+      const title = 'mow the astroturf';
+      const task = tasks.createTaskMetadata(title);
 
       expect(task).toEqual({
+        title,
         id: expect.any(String),
         creationDate: CURRENT_TIME.toISOString(),
       });

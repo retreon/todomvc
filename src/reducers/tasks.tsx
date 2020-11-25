@@ -4,7 +4,6 @@ import * as tasks from '../actions/tasks';
 
 export interface RootState {
   view: TaskView;
-  newTaskTitle: string;
   tasks: {
     [taskId: string]: Task;
   };
@@ -24,23 +23,16 @@ export interface Task {
 
 export const initialState: RootState = {
   view: TaskView.All,
-  newTaskTitle: '',
   tasks: {},
 };
 
 export default createReducer(initialState, (handleAction) => [
-  handleAction(tasks.updateTitle, (state, title) => {
-    state.newTaskTitle = title;
-  }),
-
-  handleAction(tasks.create, (state, { id, creationDate }) => {
+  handleAction(tasks.create, (state, { id, creationDate, title }) => {
     state.tasks[id] = {
-      title: state.newTaskTitle,
+      title,
       completed: false,
       creationDate,
     };
-
-    state.newTaskTitle = '';
   }),
 
   handleAction(tasks.remove, (state, id) => {
