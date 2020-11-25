@@ -18,6 +18,7 @@ export enum TaskView {
 export interface Task {
   title: string;
   completed: boolean;
+  editing: boolean;
   creationDate: string; // ISO-8601
 }
 
@@ -31,6 +32,7 @@ export default createReducer(initialState, (handleAction) => [
     state.tasks[id] = {
       title,
       completed: false,
+      editing: false,
       creationDate,
     };
   }),
@@ -64,5 +66,14 @@ export default createReducer(initialState, (handleAction) => [
     tasks.forEach((task) => {
       task.completed = hasIncompleteTask;
     });
+  }),
+
+  handleAction(tasks.startEditing, (state, taskId) => {
+    state.tasks[taskId].editing = true;
+  }),
+
+  handleAction(tasks.finishEditing, (state, { id, newTitle }) => {
+    state.tasks[id].editing = false;
+    state.tasks[id].title = newTitle;
   }),
 ]);

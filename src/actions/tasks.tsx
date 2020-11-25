@@ -10,3 +10,7 @@ export const markIncomplete = createAction<string>('tasks/mark-incomplete');
 export const clearCompleted = createAction('tasks/clear-completed');
 export const changeView = createAction<TaskView>('tasks/change-view');
 export const toggleCompletion = createAction('tasks/toggle-completion');
+export const startEditing = createAction<string>('tasks/start-editing');
+export const finishEditing = createAction<{ id: string; newTitle: string }>(
+  'tasks/finish-editing',
+);
