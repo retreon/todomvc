@@ -30,6 +30,7 @@ describe('Todo list reducer', () => {
         [MOCK_ID]: {
           title,
           completed: false,
+          editing: false,
           creationDate: MOCK_CREATION_DATE,
         },
       },
@@ -40,8 +41,7 @@ describe('Todo list reducer', () => {
     const store = initializeStore();
     store.dispatch(tasks.create('meet Ghandi'));
 
-    const [id] = Object.keys(store.getState().tasks);
-    store.dispatch(tasks.remove(id));
+    store.dispatch(tasks.remove(MOCK_ID));
 
     expect(store.getState().tasks).toEqual({});
   });
@@ -50,21 +50,18 @@ describe('Todo list reducer', () => {
     const store = initializeStore();
     store.dispatch(tasks.create('bake a pie'));
 
-    const [id] = Object.keys(store.getState().tasks);
-    store.dispatch(tasks.markCompleted(id));
-    expect(store.getState().tasks[id]).toHaveProperty('completed', true);
+    store.dispatch(tasks.markCompleted(MOCK_ID));
+    expect(store.getState().tasks[MOCK_ID]).toHaveProperty('completed', true);
 
-    store.dispatch(tasks.markIncomplete(id));
-    expect(store.getState().tasks[id]).toHaveProperty('completed', false);
+    store.dispatch(tasks.markIncomplete(MOCK_ID));
+    expect(store.getState().tasks[MOCK_ID]).toHaveProperty('completed', false);
   });
 
   it('clears completed tasks', () => {
     const store = initializeStore();
 
     store.dispatch(tasks.create('sleep more'));
-
-    const [id] = Object.keys(store.getState().tasks);
-    store.dispatch(tasks.markCompleted(id));
+    store.dispatch(tasks.markCompleted(MOCK_ID));
     store.dispatch(tasks.clearCompleted());
 
     expect(store.getState().tasks).toEqual({});
@@ -91,5 +88,20 @@ describe('Todo list reducer', () => {
     expect(Object.values(store.getState().tasks)).toMatchObject([
       { completed: false },
     ]);
+  });
+
+  it('allows editing task titles', () => {
+    const store = initializeStore();
+
+    store.dispatch(tasks.create('pet the otters'));
+    store.dispatch(tasks.startEditing(MOCK_ID));
+
+    expect(store.getState().tasks[MOCK_ID]).toHaveProperty('editing', true);
+
+    store.dispatch(tasks.finishEditing({ id: MOCK_ID, newTitle: 'run' }));
+    expect(store.getState().tasks[MOCK_ID]).toMatchObject({
+      editing: false,
+      title: 'run',
+    });
   });
 });
