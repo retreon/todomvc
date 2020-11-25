@@ -6,6 +6,8 @@ import { MdExpandMore } from 'react-icons/md';
 import * as tasks from '../actions/tasks';
 import { Button } from './common';
 
+const PURE_WHITESPACE_REGEX = /^\s*$/;
+
 export class TaskInput extends React.Component<Props, State> {
   state = {
     title: '',
@@ -37,8 +39,10 @@ export class TaskInput extends React.Component<Props, State> {
     event.stopPropagation();
     event.preventDefault();
 
-    this.props.createTask(this.state.title);
-    this.setState({ title: '' });
+    if (!PURE_WHITESPACE_REGEX.test(this.state.title)) {
+      this.props.createTask(this.state.title);
+      this.setState({ title: '' });
+    }
   };
 }
 

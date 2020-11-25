@@ -58,4 +58,13 @@ describe('TaskInput', () => {
     expect(props.createTask).toHaveBeenCalledWith(title);
     expect(findByTestId('new-todo-input').prop('value')).toBe('');
   });
+
+  it('does not create a task if there is only whitespace', () => {
+    const { props, simulate } = setup();
+
+    simulate.input('  \t\n\t  ');
+    simulate.submit();
+
+    expect(props.createTask).not.toHaveBeenCalled();
+  });
 });
