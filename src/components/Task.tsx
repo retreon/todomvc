@@ -3,30 +3,19 @@ import { connect } from 'react-redux';
 import invariant from 'invariant';
 import styled from 'styled-components';
 import { MdClose, MdCheck } from 'react-icons/md';
+import FreeformInput from 'freeform-input';
 
 import { RootState } from '../reducers/tasks';
 import * as tasks from '../actions/tasks';
 import { Button } from './common';
 
-interface OwnProps {
-  id: string;
-}
-
-interface Props extends OwnProps {
-  title: string;
-  completed: boolean;
-  removeTask: typeof tasks.remove;
-  markCompleted: typeof tasks.markCompleted;
-  markIncomplete: typeof tasks.markIncomplete;
-}
-
 export class Task extends React.Component<Props> {
   render() {
-    const { title, completed } = this.props;
+    const { title, completed, editing } = this.props;
 
     return (
       <Container>
-        <StylisticCheckbox data-checked={completed}>
+        <StylisticCheckbox data-checked={completed} data-editing={editing}>
           <HiddenCheckbox
             data-test-id="task-completion-checkbox"
             onChange={this.toggleCompletion}
@@ -34,13 +23,31 @@ export class Task extends React.Component<Props> {
           />
           <MdCheck />
         </StylisticCheckbox>
-        <Title data-completed={completed}>{title}</Title>
-        <DeleteButton
-          data-test-id="task-delete-button"
-          onClick={this.removeTask}
-        >
-          <MdClose />
-        </DeleteButton>
+        {editing ? (
+          <EditingInput
+            autoFocus
+            value={title}
+            onChange={this.confirmTitleChange}
+            enterKeyHint="done"
+            data-test-id="task-title-edit-input"
+          />
+        ) : (
+          <Title
+            data-test-id="task-title"
+            data-completed={completed}
+            onDoubleClick={this.editTitle}
+          >
+            {title}
+          </Title>
+        )}
+        {editing === false && (
+          <DeleteButton
+            data-test-id="task-delete-button"
+            onClick={this.removeTask}
+          >
+            <MdClose />
+          </DeleteButton>
+        )}
       </Container>
     );
   }
@@ -58,6 +65,29 @@ export class Task extends React.Component<Props> {
       this.props.markCompleted(id);
     }
   };
+
+  editTitle = () => {
+    this.props.startEditing(this.props.id);
+  };
+
+  confirmTitleChange = (newTitle: string) => {
+    this.props.finishEditing({ id: this.props.id, newTitle });
+  };
+}
+
+interface OwnProps {
+  id: string;
+}
+
+interface Props extends OwnProps {
+  title: string;
+  completed: boolean;
+  editing: boolean;
+  removeTask: typeof tasks.remove;
+  markCompleted: typeof tasks.markCompleted;
+  markIncomplete: typeof tasks.markIncomplete;
+  startEditing: typeof tasks.startEditing;
+  finishEditing: typeof tasks.finishEditing;
 }
 
 const Container = styled.li`
@@ -92,6 +122,7 @@ const StylisticCheckbox = styled.label.attrs({})`
   width: 1.75rem;
   border-radius: 2em;
   margin: 0 calc(var(--unit) * 2);
+  margin-right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,10 +135,15 @@ const StylisticCheckbox = styled.label.attrs({})`
   &[data-checked='false'] svg {
     visibility: hidden;
   }
+
+  &[data-editing='true'] {
+    visibility: hidden;
+  }
 `;
 
 const Title = styled.p`
   padding: calc(var(--unit) * 2) 0;
+  padding-left: calc(var(--unit) * 2);
   margin: 0;
   transition: color 100ms ease-in-out;
   overflow: hidden;
@@ -118,6 +154,20 @@ const Title = styled.p`
     color: var(--color-text-lighter);
     text-decoration: line-through;
   }
+`;
+
+const EditingInput = styled(FreeformInput)`
+  padding: calc(var(--unit) * 2) 0;
+  padding-left: calc(var(--unit) * 2);
+  color: inherit;
+  font-weight: inherit;
+  font-size: 1.5rem;
+  box-sizing: border-box;
+  outline: none;
+  box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-divider);
+  border-width: 0 1px;
+  font-family: inherit;
 `;
 
 const DeleteButton = styled(Button)`
@@ -135,6 +185,7 @@ export const mapStateToProps = (state: RootState, { id }: OwnProps) => {
   return {
     title: task.title,
     completed: task.completed,
+    editing: task.editing,
   };
 };
 
@@ -142,6 +193,8 @@ const mapDispatchToProps = {
   removeTask: tasks.remove,
   markCompleted: tasks.markCompleted,
   markIncomplete: tasks.markIncomplete,
+  startEditing: tasks.startEditing,
+  finishEditing: tasks.finishEditing,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task);
