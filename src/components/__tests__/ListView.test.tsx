@@ -10,6 +10,8 @@ describe('ListView', () => {
     const props = {
       taskIds: ['task-id-1', 'task-id-2'],
       incompleteTasks: 5,
+      hasTasks: true,
+      clearCompletedTasks: jest.fn(),
       ...overrides,
     };
 
@@ -36,10 +38,16 @@ describe('ListView', () => {
   });
 
   describe('mapStateToProps', () => {
-    it('returns the task count', () => {
+    it('returns props', () => {
       const state = mapStateToProps(initialState);
 
-      expect(state).toHaveProperty('incompleteTasks', 0);
+      expect(state).toMatchInlineSnapshot(`
+        Object {
+          "hasTasks": false,
+          "incompleteTasks": 0,
+          "taskIds": Array [],
+        }
+      `);
     });
 
     it('grabs the list of tasks', () => {
@@ -48,12 +56,14 @@ describe('ListView', () => {
         tasks: {
           second: {
             title: 'age another year',
-            completed: true,
+            completed: false,
+            editing: true,
             creationDate: '2005',
           },
           first: {
             title: 'conquer the world',
             completed: false,
+            editing: false,
             creationDate: '2000',
           },
         },
@@ -71,11 +81,13 @@ describe('ListView', () => {
           first: {
             title: 'learn to pilot a helicopter',
             completed: false,
+            editing: false,
             creationDate: '2020',
           },
           second: {
             title: 'write yet another JS framework',
             completed: true,
+            editing: false,
             creationDate: '2019',
           },
         },

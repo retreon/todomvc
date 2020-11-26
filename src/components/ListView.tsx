@@ -10,6 +10,7 @@ import ListFilter from './ListFilter';
 
 interface Props {
   incompleteTasks: number;
+  hasTasks: boolean;
   taskIds: Array<string>; // List of task IDs.
   clearCompletedTasks: typeof tasks.clearCompleted;
 }
@@ -18,18 +19,19 @@ export function ListView({
   incompleteTasks,
   taskIds,
   clearCompletedTasks,
+  hasTasks,
 }: Props) {
   const pluralizedEntity = incompleteTasks === 1 ? 'item' : 'items';
 
-  return (
+  return hasTasks === false ? null : (
     <Container>
-      <TaskList>
+      <TaskList data-test="task-list">
         {taskIds.map((taskId) => (
           <Task id={taskId} key={taskId} />
         ))}
       </TaskList>
 
-      <Controls>
+      <Controls data-test="task-list-toolbar">
         <RemainingTasks>
           {incompleteTasks} {pluralizedEntity} left
         </RemainingTasks>
@@ -91,6 +93,7 @@ export const mapStateToProps = (state: RootState) => {
 
   return {
     incompleteTasks: tasks.filter((task) => !task.completed).length,
+    hasTasks: tasks.length > 0,
     taskIds: Object.entries(state.tasks)
       .sort(([, t1], [, t2]) => {
         return (

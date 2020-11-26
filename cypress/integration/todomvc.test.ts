@@ -9,6 +9,11 @@ describe('TodoMVC', () => {
     cy.get('[data-test=task-title]').should('have.text', 'Use Cypress');
   });
 
+  it('hides the toolbar when no tasks exist', () => {
+    cy.get('[data-test=task-list]').should('not.exist');
+    cy.get('[data-test=task-list-toolbar]').should('not.exist');
+  });
+
   it('deletes tasks when you click the delete button', () => {
     cy.get('[data-test=new-task-input]').type('Adopt a turtle{enter}');
     cy.get('[data-test=task-delete-button]').click();
