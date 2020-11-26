@@ -17,7 +17,7 @@ export class Task extends React.Component<Props> {
       <Container>
         <StylisticCheckbox data-checked={completed} data-editing={editing}>
           <HiddenCheckbox
-            data-test-id="task-completion-checkbox"
+            data-test="task-completion-checkbox"
             onChange={this.toggleCompletion}
             checked={completed}
           />
@@ -29,11 +29,11 @@ export class Task extends React.Component<Props> {
             value={title}
             onChange={this.confirmTitleChange}
             enterKeyHint="done"
-            data-test-id="task-title-edit-input"
+            data-test="task-title-edit-input"
           />
         ) : (
           <Title
-            data-test-id="task-title"
+            data-test="task-title"
             data-completed={completed}
             onDoubleClick={this.editTitle}
           >
@@ -42,7 +42,7 @@ export class Task extends React.Component<Props> {
         )}
         {editing === false && (
           <DeleteButton
-            data-test-id="task-delete-button"
+            data-test="task-delete-button"
             onClick={this.removeTask}
           >
             <MdClose />

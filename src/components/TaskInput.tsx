@@ -15,13 +15,13 @@ export class TaskInput extends React.Component<Props, State> {
 
   render() {
     return (
-      <Container data-test-id="new-todo-form" onSubmit={this.appendTodo}>
+      <Container data-test="new-todo-form" onSubmit={this.appendTodo}>
         <ToggleAllTasksCompleted onClick={this.props.toggleTaskCompletion}>
           <MdExpandMore />
         </ToggleAllTasksCompleted>
 
         <Input
-          data-test-id="new-todo-input"
+          data-test="new-todo-input"
           value={this.state.title}
           autoFocus
           placeholder="What needs to be done?"

@@ -22,7 +22,7 @@ describe('Task', () => {
     const output = shallow(<Task {...props} />);
 
     function findById(id: string) {
-      return output.find({ 'data-test-id': id });
+      return output.find({ 'data-test': id });
     }
 
     return {

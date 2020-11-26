@@ -15,7 +15,7 @@ describe('ListFilter', () => {
     const output = shallow(<ListFilter {...props} />);
 
     function findById(id: string) {
-      return output.find({ 'data-test-id': id });
+      return output.find({ 'data-test': id });
     }
 
     return {

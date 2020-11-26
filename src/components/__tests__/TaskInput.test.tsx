@@ -16,7 +16,7 @@ describe('TaskInput', () => {
     const output = shallow(<TaskInput {...props} />);
 
     function findByTestId(id: string) {
-      return output.find({ 'data-test-id': id });
+      return output.find({ 'data-test': id });
     }
 
     const simulate = {
