@@ -5,7 +5,7 @@ describe('TodoMVC', () => {
   });
 
   it('can add tasks to the task list', () => {
-    cy.get('[data-test=new-todo-input]').type('Use Cypress{enter}');
+    cy.get('[data-test=new-task-input]').type('Use Cypress{enter}');
     cy.get('[data-test=task-title]').should('have.text', 'Use Cypress');
   });
 });
