@@ -28,7 +28,7 @@
     "eject": "react-scripts eject",
     "test": "./run-tests",
     "test:unit": "react-scripts test --colors",
-    "test:lint": "eslint src --color"
+    "test:lint": "eslint src cypress --color"
   },
   "prettier": {
     "singleQuote": true,
@@ -70,6 +70,7 @@
     "@types/invariant": "^2.2.34",
     "@types/styled-components": "^5.1.4",
     "@types/uuid": "^8.3.0",
+    "cypress": "^6.0.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "eslint-config-prettier": "^6.15.0",
