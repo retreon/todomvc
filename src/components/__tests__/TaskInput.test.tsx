@@ -16,18 +16,18 @@ describe('TaskInput', () => {
     const output = shallow(<TaskInput {...props} />);
 
     function findByTestId(id: string) {
-      return output.find({ 'data-test-id': id });
+      return output.find({ 'data-test': id });
     }
 
     const simulate = {
       input(input: string) {
-        findByTestId('new-todo-input').simulate('input', {
+        findByTestId('new-task-input').simulate('input', {
           currentTarget: { value: input },
         });
       },
 
       submit() {
-        findByTestId('new-todo-form').simulate('submit', new Event('submit'));
+        findByTestId('new-task-form').simulate('submit', new Event('submit'));
       },
     };
 
@@ -45,7 +45,7 @@ describe('TaskInput', () => {
     const title = 'release the kraken!';
     simulate.input(title);
 
-    expect(findByTestId('new-todo-input').prop('value')).toBe(title);
+    expect(findByTestId('new-task-input').prop('value')).toBe(title);
   });
 
   it('creates the new task', () => {
@@ -56,7 +56,7 @@ describe('TaskInput', () => {
     simulate.submit();
 
     expect(props.createTask).toHaveBeenCalledWith(title);
-    expect(findByTestId('new-todo-input').prop('value')).toBe('');
+    expect(findByTestId('new-task-input').prop('value')).toBe('');
   });
 
   it('does not create a task if there is only whitespace', () => {

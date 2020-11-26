@@ -36,12 +36,16 @@ export class ListFilter extends React.Component<Props> {
                 id={this.ids[value]}
                 name={this.ids.radioGroup}
                 value={value}
-                data-test-id={`input-radio-filter-${value}`}
+                data-test={`input-radio-filter-${value}`}
                 checked={checked}
                 onChange={this.selectionHandlers[value]}
               />
 
-              <RadioLabel data-checked={checked} htmlFor={this.ids[value]}>
+              <RadioLabel
+                data-test={`task-filter-${value}`}
+                data-checked={checked}
+                htmlFor={this.ids[value]}
+              >
                 {label}
               </RadioLabel>
             </React.Fragment>

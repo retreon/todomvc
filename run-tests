@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 yarn test:lint || fail=1
 yarn test:unit --watchAll=false || fail=1
+yarn test:e2e || fail=1
 
 if [[ -n "$fail" ]]; then
   exit 1

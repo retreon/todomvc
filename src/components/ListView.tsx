@@ -36,7 +36,10 @@ export function ListView({
 
         <ListFilter />
 
-        <ClearCompleted onClick={clearCompletedTasks}>
+        <ClearCompleted
+          data-test="clear-completed-tasks"
+          onClick={clearCompletedTasks}
+        >
           Clear completed
         </ClearCompleted>
       </Controls>

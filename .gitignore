@@ -4,3 +4,5 @@ node_modules/
 .DS_Store
 coverage/
 build/
+cypress/videos/
+cypress/screenshots/
