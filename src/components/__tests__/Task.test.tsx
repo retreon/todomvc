@@ -43,12 +43,12 @@ describe('Task', () => {
   it('toggles completion on click', () => {
     const { findById, props } = setup({ completed: false });
 
-    findById('task-completion-checkbox').simulate('change', {
+    findById('hidden-task-completion-checkbox').simulate('change', {
       currentTarget: { value: true },
     });
     expect(props.markCompleted).toHaveBeenCalledWith(props.id);
 
-    findById('task-completion-checkbox').simulate('change', {
+    findById('hidden-task-completion-checkbox').simulate('change', {
       currentTarget: { value: false },
     });
     expect(props.markCompleted).toHaveBeenCalledWith(props.id);
@@ -65,14 +65,14 @@ describe('Task', () => {
   it('shows an input while editing', () => {
     const { findById, props } = setup({ editing: true });
 
-    expect(findById('task-title-edit-input').prop('value')).toBe(props.title);
+    expect(findById('edit-task-title-input').prop('value')).toBe(props.title);
   });
 
   it('confirms the edits when you finish', () => {
     const { findById, props } = setup({ editing: true });
 
     const newTitle = 'assume the identity of Nathan Fillion';
-    findById('task-title-edit-input').simulate('change', newTitle);
+    findById('edit-task-title-input').simulate('change', newTitle);
 
     expect(props.finishEditing).toHaveBeenCalledWith({
       id: props.id,

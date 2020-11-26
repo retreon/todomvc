@@ -14,22 +14,27 @@ export class Task extends React.Component<Props> {
     const { title, completed, editing } = this.props;
 
     return (
-      <Container>
-        <StylisticCheckbox data-checked={completed} data-editing={editing}>
+      <Container data-test="task">
+        <StylisticCheckbox
+          data-test="task-completion-checkbox"
+          data-completed={completed}
+          data-editing={editing}
+        >
           <HiddenCheckbox
-            data-test="task-completion-checkbox"
+            data-test="hidden-task-completion-checkbox"
             onChange={this.toggleCompletion}
             checked={completed}
           />
           <MdCheck />
         </StylisticCheckbox>
+
         {editing ? (
           <EditingInput
             autoFocus
             value={title}
             onChange={this.confirmTitleChange}
             enterKeyHint="done"
-            data-test="task-title-edit-input"
+            data-test="edit-task-title-input"
           />
         ) : (
           <Title
@@ -127,12 +132,12 @@ const StylisticCheckbox = styled.label.attrs({})`
   align-items: center;
   justify-content: center;
 
-  &[data-checked='true'] {
+  &[data-completed='true'] {
     border-color: var(--color-secondary);
     color: var(--color-secondary);
   }
 
-  &[data-checked='false'] svg {
+  &[data-completed='false'] svg {
     visibility: hidden;
   }
 

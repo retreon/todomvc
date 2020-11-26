@@ -16,7 +16,10 @@ export class TaskInput extends React.Component<Props, State> {
   render() {
     return (
       <Container data-test="new-task-form" onSubmit={this.appendTodo}>
-        <ToggleAllTasksCompleted onClick={this.props.toggleTaskCompletion}>
+        <ToggleAllTasksCompleted
+          data-test="toggle-all-tasks"
+          onClick={this.props.toggleTaskCompletion}
+        >
           <MdExpandMore />
         </ToggleAllTasksCompleted>
 
