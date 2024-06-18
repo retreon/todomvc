@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/todomvc/static/js/main.19576d1b.js",
+    "index.html": "/todomvc/index.html",
+    "main.19576d1b.js.map": "/todomvc/static/js/main.19576d1b.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.19576d1b.js"
+  ]
+}
