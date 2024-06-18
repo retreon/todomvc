@@ -8,18 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy to GH Pages
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        name: Install Node
-        with:
-          node-version: 14
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
       - name: Install Packages
-        uses: bahmutov/npm-install@v1
+        run: nix develop --command yarn install
       - name: Build Production Bundle
-        run: yarn build
+        run: nix develop --command yarn build
       - name: Deploy to GitHub Pages
         if: success()
-        uses: crazy-max/ghaction-github-pages@v2
+        uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: gh-pages
           build_dir: build
